@@ -1,31 +1,31 @@
-let today = new Date();
-let date = today.getDate();
-let month = today.getMonth() + 1; 
-let year = today.getFullYear();
-if (date < 10) {
-    date = '0' + date
+let td = new Date();
+let dd = td.getDate();
+let mm = td.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+let yyyy = td.getFullYear();
+if (dd < 10) {
+    dd = '0' + dd
 }
-if (month < 10) {
-    month = '0' + month
+if (mm < 10) {
+    mm = '0' + mm
 }
-max_date = year - 18 + '-' + month + '-' + date;
-min_date = year - 55 + '-' + month + '-' + date;
-document.getElementById("dob").setAttribute("min", min_date);
-document.getElementById("dob").setAttribute("max", max_date);
+maxDate = yyyy - 18 + '-' + mm + '-' + dd;
+minDate = yyyy - 55 + '-' + mm + '-' + dd;
+document.getElementById("dob").setAttribute("min", minDate);
+document.getElementById("dob").setAttribute("max", maxDate);
 
-let user_entries = local_storage.getItem("user-entries");
-if (user_entries) {
-    user_entries = JSON.parse(user_entries);
+let userEntries = localStorage.getItem("user-entries");
+if (userEntries) {
+    userEntries = JSON.parse(userEntries);
 } else {
-    user_entries = [];
+    userEntries = [];
 }
 
 const displayEntries = () => {
-    const saveduser_entries = local_storage.getItem("user-entries");
+    const savedUserEntries = localStorage.getItem("user-entries");
     let entries = "";
-    if (saveduser_entries) {
-        const parseduser_entries = JSON.parse(saveduser_entries);
-        entries = parseduser_entries
+    if (savedUserEntries) {
+        const parsedUserEntries = JSON.parse(savedUserEntries);
+        entries = parsedUserEntries
             .map((entry) => {
                 const name = `<td class='border px-4 py-2'>${entry.name}</td>`;
                 const email = `<td class='border px-4 py-2'>${entry.email}</td>`;
@@ -64,10 +64,10 @@ const saveUserForm = (event) => {
         dob,
         acceptTermsAndConditions,
     };
-    user_entries.push(userDetails);
-    local_storage.setItem("user-entries", JSON.stringify(user_entries));
+    userEntries.push(userDetails);
+    localStorage.setItem("user-entries", JSON.stringify(userEntries));
 
-    displayEntries();
+    displayEntries(); 
 };
 
 let form = document.getElementById("user_form");
