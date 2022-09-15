@@ -1,7 +1,7 @@
-let td = new Date();
-let dd = td.getDate();
-let mm = td.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
-let yyyy = td.getFullYear();
+let tod = new Date();
+let dd = tod.getDate();
+let mm = tod.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+let yyyy = tod.getFullYear();
 if (dd < 10) {
     dd = '0' + dd
 }
@@ -67,7 +67,7 @@ const saveUserForm = (event) => {
     userEntries.push(userDetails);
     localStorage.setItem("user-entries", JSON.stringify(userEntries));
 
-    displayEntries(); 
+    displayEntries(); // Add this line
 };
 
 let form = document.getElementById("user_form");
