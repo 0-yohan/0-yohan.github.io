@@ -1,52 +1,50 @@
-const http = require('http');
-const fs = require('fs');
-const args = require('minimist')(process.argv.slice(2));
+const http = require("http");
+const fs = require("fs");
 
-let homePage;
-let projectPage;
-let registrationPage;
-let registrationScript;
+let homeContent = "";
+let projectContent = "";
+let registrationContent="";
 
-fs.readFile("home.html", (err, data) => {
-    if (err) throw err;
-    homePage = data.toString();
-})
+fs.readFile("home.html", (err, home) => {
+  if (err) {
+    throw err;
+  }
+  homeContent = home;
+});
 
-fs.readFile("project.html", (err, data) => {
-    if (err) throw err;
-    projectPage = data.toString();
-})
+fs.readFile("project.html", (err, project) => {
+  if (err) {
+    throw err;
+  }
+  projectContent = project;
+});
 
-fs.readFile("registration.html", (err, data) => {
-    if (err) throw err;
-    registrationPage = data.toString();
-})
+fs.readFile("registration.html",(err,reg) => {
+  if (err){
+    throw err;
+  }
+  registrationContent=reg;
+});
 
-fs.readFile("registration.js", (err, data) => {
-    if (err) throw err;
-    registrationScript = data.toString();
-})
+let args=require("minimist")(process.argv.slice(2));
 
 http.createServer((request, response) => {
     let url = request.url;
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    console.log(url)
+    response.writeHeader(200, { "Content-Type": "text/html" });
     switch (url) {
-        case "/project.html":
-            response.write(projectPage);
-            response.end();
-            break;
-        case "/registration.html":
-            response.write(registrationPage);
-            response.end();
-            break;
-        case "/registration.js":
-            response.write(registrationScript);
-            response.end();
-            break;
+        case "/project":
+          response.write(projectContent);
+          response.end();
+          break;
+        case "/registration":
+          response.write(registrationContent);
+          response.end();
+          break;
+
         default:
-            response.write(homePage);
-            response.end();
-            break;
+          response.write(homeContent);
+          response.end();
+          break;
     }
-}).listen(args.port);
+  })
+  .listen(args["port"]);
